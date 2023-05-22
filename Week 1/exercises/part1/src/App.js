@@ -7,11 +7,13 @@ const Header = (course) => {
   )
 }
 
-const Content = (exercise) => {
-  console.log(exercise)
+const Content = ({ courses }) => {
   return (
     <div>
-      <p>Course: {exercise.name} Amount of exercises is {exercise.amount} </p>
+      <p>{courses[0].name} {courses[0].amount}</p>
+      <p>{courses[1].name} {courses[1].amount}</p>
+      <p>{courses[2].name} {courses[2].amount}</p>
+
     </div>
   )
 }
@@ -35,12 +37,17 @@ const App = () => {
   const part3 = 'State of a component'
   const exercises3 = 14
 
+  const courses = [
+    {name: part1, amount: exercises1},
+    {name: part2, amount: exercises2},
+    {name: part3, amount: exercises3},
+
+  ]
+
   return (
     <div>
       <Header name={course}/>
-      <Content name={part1} amount={exercises1}/>
-      <Content name={part2} amount={exercises2}/>
-      <Content name={part3} amount={exercises3}/>
+      <Content courses={courses}/>
       <Total one={exercises1} two={exercises2} three={exercises3}/>
 
     </div>
