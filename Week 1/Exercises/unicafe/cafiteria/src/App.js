@@ -8,6 +8,17 @@ const Button = ({ handleClick, text }) => (
 )
 
 
+const StatisticLine = ({ text,value,extra }) => {
+  return (
+      <tr>         
+        <td>{text}</td>
+        <td>{value}</td>
+        <td>{extra}</td>
+      </tr>
+  )
+}
+
+
 const App = () => {
   // save clicks of each button to its own state
   const [good, setGood] = useState(0)
@@ -18,28 +29,45 @@ const App = () => {
   const [positive, setPostive] = useState(0)
 
   const handleGoodClick = () => {
-    setGood(good + 1)
-    setAll(all + 1)
-    const goodPercentage = good / all
+    const newGood = good + 1
+    setGood(newGood)
+    const newAll = all + 1
+    setAll(newAll)
+    const goodPercentage = (good / newAll)*100
     setPostive(goodPercentage)
-    console.log(goodPercentage)
-}
+    
+  }
 
   const handleBadClick = () => {
-    setBad(bad + 1)
-    setAll(all + 1)
-    const goodPercentage = good / all
+    const newBad = bad + 1
+    setBad(newBad)
+    const newAll = all + 1
+    setAll(newAll)
+    const goodPercentage = (good / newAll)*100
     setPostive(goodPercentage)
-    console.log(goodPercentage)
   }
 
   const handleNeutralClick = () => {
-    setNeutral(neutral + 1)
-    setAll(all + 1)
-    const goodPercentage = good / all
+    const newNeutral = neutral + 1
+    setNeutral(newNeutral)
+    const newAll = all + 1
+    setAll(newAll)
+    const goodPercentage = (good / newAll)*100
     setPostive(goodPercentage)
-    console.log(goodPercentage)
-}
+  }
+
+  if (all === 0) {
+    return (
+      <div>
+        <h1>give feedback</h1>
+        <button onClick={handleGoodClick}>good</button>
+        <button onClick={handleNeutralClick}>neutral</button>
+        <button onClick={handleBadClick}>bad</button>
+        <h1>statistics</h1>
+        <p>No feedback given</p>
+      </div>  
+    )
+  }
 
   return (
     <div>
@@ -47,12 +75,14 @@ const App = () => {
       <button onClick={handleGoodClick}>good</button>
       <button onClick={handleNeutralClick}>neutral</button>
       <button onClick={handleBadClick}>bad</button>
-    <p>good {good}</p>
-    <p>neutral {neutral}</p>
-    <p>bad {bad}</p>
-    <p>all {all}</p>
-    <p>average {average}</p>
-    <p>positive {positive}%</p>
+      <h1>statistics</h1>
+    
+      <StatisticLine text='good ' value = {good}/>
+      <StatisticLine text='neutral ' value = {neutral}/>
+      <StatisticLine text='bad ' value = {bad}/>
+      <StatisticLine text='all ' value = {all}/>
+      <StatisticLine text='average ' value = {(good-bad)/all}/>
+      <StatisticLine text='positive ' value = {positive} extra = '%'/>
     </div>
   )
 }
