@@ -17,6 +17,34 @@ const StatisticLine = ({ text,value,extra }) => {
   )
 }
 
+const handleGoodClick = (good, setGood, all, setAll, setPostive) => {
+  const newGood = good + 1
+  setGood(newGood)
+  const newAll = all + 1
+  setAll(newAll)
+  const goodPercentage = (good / newAll)*100
+  setPostive(goodPercentage)
+  
+}
+
+const handleBadClick = (bad, setBad, all, setAll, setPostive, good) => {
+  const newBad = bad + 1
+  setBad(newBad)
+  const newAll = all + 1
+  setAll(newAll)
+  const goodPercentage = (good / newAll)*100
+  setPostive(goodPercentage)
+}
+
+const handleNeutralClick = (neutral, setNeutral, all, setAll, setPostive, good) => {
+  const newNeutral = neutral + 1
+  setNeutral(newNeutral)
+  const newAll = all + 1
+  setAll(newAll)
+  const goodPercentage = (good / newAll)*100
+  setPostive(goodPercentage)
+}
+
 
 const App = () => {
   // save clicks of each button to its own state
@@ -27,41 +55,14 @@ const App = () => {
   const [average, setAverage] = useState(0)
   const [positive, setPostive] = useState(0)
 
-  const handleGoodClick = () => {
-    const newGood = good + 1
-    setGood(newGood)
-    const newAll = all + 1
-    setAll(newAll)
-    const goodPercentage = (good / newAll)*100
-    setPostive(goodPercentage)
-    
-  }
-
-  const handleBadClick = () => {
-    const newBad = bad + 1
-    setBad(newBad)
-    const newAll = all + 1
-    setAll(newAll)
-    const goodPercentage = (good / newAll)*100
-    setPostive(goodPercentage)
-  }
-
-  const handleNeutralClick = () => {
-    const newNeutral = neutral + 1
-    setNeutral(newNeutral)
-    const newAll = all + 1
-    setAll(newAll)
-    const goodPercentage = (good / newAll)*100
-    setPostive(goodPercentage)
-  }
 
   if (all === 0) {
     return (
       <div>
         <h1>give feedback</h1>
-        <button onClick={handleGoodClick}>good</button>
-        <button onClick={handleNeutralClick}>neutral</button>
-        <button onClick={handleBadClick}>bad</button>
+        <Button handleClick={() => handleGoodClick(good, setGood, all, setAll, setPostive)} text = 'good'/>
+        <Button handleClick={() => handleNeutralClick(neutral, setNeutral, all, setAll, setPostive, good)} text = 'neutral'/>
+        <Button handleClick={() => handleBadClick(bad, setBad, all, setAll, setPostive, good)} text = 'bad'/>
         <h1>statistics</h1>
         <p>No feedback given</p>
       </div>  
@@ -71,9 +72,9 @@ const App = () => {
   return (
     <div>
       <h1>give feedback</h1>
-      <button onClick={handleGoodClick}>good</button>
-      <button onClick={handleNeutralClick}>neutral</button>
-      <button onClick={handleBadClick}>bad</button>
+      <Button handleClick={() => handleGoodClick(good, setGood, all, setAll, setPostive)} text = 'good'/>
+      <Button handleClick={() => handleNeutralClick(neutral, setNeutral, all, setAll, setPostive, good)} text = 'neutral'/>
+      <Button handleClick={() => handleBadClick(bad, setBad, all, setAll, setPostive, good)} text = 'bad'/>
       <h1>statistics</h1>
     
       <StatisticLine text='good ' value = {good}/>
