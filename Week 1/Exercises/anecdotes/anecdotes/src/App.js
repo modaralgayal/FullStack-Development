@@ -17,7 +17,6 @@ const handleVoteClick = (points,setPoints, voted) => {
   console.log(copy)
 }
 
-
 const App = () => {
   const anecdotes = [
     'If it hurts, do it more often.',
@@ -33,12 +32,29 @@ const App = () => {
   const [selected, setSelected] = useState(0)
   const [points, setPoints] = useState([0,0,0,0,0,0,0,0])
 
+  let largest = 0
+  let index = 0
+  let mostPopular = 0
+  points.forEach( (value) => {
+    if (value > largest) {
+      largest = value
+      mostPopular = index
+    }
+    index += 1
+
+  })
+  //  console.log(mostPopular)
   return (
     <div>
+      <h1>Anecdote of the day</h1>
       <p>{anecdotes[selected]}</p>
       <p>has {points[selected]} votes</p>
       <button onClick = {() => handleVoteClick(points,setPoints,selected)}>vote</button>
       <button onClick= {() => handleNextClick(0,8,setSelected,points,setPoints)}>next anecdote</button>
+      <h1>Anecdote with most votes</h1>
+      <p>{anecdotes[mostPopular]}</p>
+      <p>has {largest} votes</p>
+
     </div>
   )
 }
