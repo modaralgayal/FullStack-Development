@@ -1,32 +1,6 @@
 import React from 'react'
-
-const Total = ({parts}) => {
-  let array = []
-  parts.map(part => array = array.concat(part.exercises))
-  console.log(array)
-  const init = 0
-  const sum = array.reduce(
-    (acc , current) => acc + current,
-    init
-  )
-  return (
-    <div>
-      <b>total of {sum} exercises</b>
-    </div>
-  )
-}
-
-const Course = ({course}) => {
-  return (
-      <div>
-        <h2>{course.name}</h2>
-        <ul>
-          {course.parts.map(course => <li key={course.id}>{course.name} {course.exercises}</li>)}
-        </ul>
-      </div>
-  )
-  }
-
+import Course from './components/Course'
+import Total from './components/Total'
 
   const App = () => {
     const courses = [
