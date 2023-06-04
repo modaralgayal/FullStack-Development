@@ -1,5 +1,6 @@
 import React from 'react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import axios from 'axios'
 import Name from './components/Name'
 import handleFiltering from './components/handleFiltering'
 import handleNameChange from './components/handleNameChange'
@@ -18,6 +19,19 @@ const App = () => {
   ])
   const [showAll, setShowAll] = useState('')
   const [filtered, setFiltered] = useState([...allNames])
+
+  useEffect(() => {
+    console.log('effect')
+    axios
+      .get('http://localhost:3001/persons')
+      .then(response => {
+        console.log('promise fulfilled')
+        addNewName(response.data)
+      })
+
+  }, [])
+  console.log('render',allNames.length,'persons')
+
 
   return (
     <div>
