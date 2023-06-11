@@ -1,36 +1,33 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
-import axios from 'axios'
 import Name from './components/Name'
 import handleFiltering from './components/handleFiltering'
 import handleNameChange from './components/handleNameChange'
 import handleNumberChange from './components/handleNumberChange'
 import addName from './components/addName'
+import nameService from './services/name' 
 
 
 const App = () => {
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
-  const [allNames, addNewName] = useState([
-    {name: 'Arto Hellas', number: '040-1234567', id: 1},
-    { name: 'Ada Lovelace', number: '39-44-5323523', id: 2 },
-    { name: 'Dan Abramov', number: '12-43-234345', id: 3 },
-    { name: 'Mary Poppendieck', number: '39-23-6423122', id: 4 }
-  ])
+  const [allNames, addNewName] = useState([])
   const [showAll, setShowAll] = useState('')
-  const [filtered, setFiltered] = useState([...allNames])
+  const [filtered, setFiltered] = useState([])
 
   useEffect(() => {
     console.log('effect')
-    axios
-      .get('http://localhost:3001/persons')
-      .then(response => {
-        console.log('promise fulfilled')
-        addNewName(response.data)
+    nameService
+      .getAll()
+      .then(initialNames => {
+        addNewName(initialNames)
+        setFiltered([...initialNames])
       })
 
   }, [])
   console.log('render',allNames.length,'persons')
+
+  console.log(filtered)
 
 
   return (
@@ -40,7 +37,7 @@ const App = () => {
       <form>
       filter shown with <input
       value = {showAll}
-      onChange={(event) => handleFiltering( event, setShowAll, showAll, setFiltered, filtered)}
+      onChange={(event) => handleFiltering(event, setShowAll, showAll, setFiltered, filtered)}
       />
         
       </form>
