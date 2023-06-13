@@ -1,4 +1,5 @@
 import React from "react"
+import axios from 'axios'
 
 
 const addName = (event, newName, newNumber, allNames, addNewName, showAll, setShowAll, setFiltered, setNewName, setNewNumber, nameService) => {
@@ -6,12 +7,11 @@ const addName = (event, newName, newNumber, allNames, addNewName, showAll, setSh
     const nameObject = {
       name: newName,
       number: newNumber,
-      id: allNames.length + 1
     }
   
     const nameExists = allNames.some((name) => name.name.toLowerCase() === newName.toLowerCase())
     if (nameExists) {
-      alert(`${newName} already exists`)
+      console.log(`${newName} already exists`)
       return
     }
   
@@ -20,6 +20,12 @@ const addName = (event, newName, newNumber, allNames, addNewName, showAll, setSh
       alert(`${newNumber} already exists`)
       return
     }
+
+    axios
+      .post('http://localhost:3001/persons', nameObject)
+      .then(response => {
+        console.log(response)
+      })
   
     nameService
       .create(nameObject)

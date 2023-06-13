@@ -30,7 +30,7 @@ const App = () => {
 
   //console.log(filtered)
 
-  const handleDelete = ({ id, name }) => {
+  const handleDelete = ({id, name}) => {
     console.log(`Delete ${name}?`)
 
     if (window.confirm(`Delete ${name}?`)) {
@@ -39,7 +39,7 @@ const App = () => {
         addNewName(updatedNames)
         setFiltered(updatedNames)
     }
-}
+  }
 
 
   return (
