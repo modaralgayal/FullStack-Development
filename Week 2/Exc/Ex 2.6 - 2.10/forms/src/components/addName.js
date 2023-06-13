@@ -1,7 +1,7 @@
 import React from "react"
 
 
-const addName = (event, newName, newNumber, allNames, addNewName, showAll, setShowAll, setFiltered, setNewName, setNewNumber) => {
+const addName = (event, newName, newNumber, allNames, addNewName, showAll, setShowAll, setFiltered, setNewName, setNewNumber, nameService) => {
     event.preventDefault()
     const nameObject = {
       name: newName,
@@ -21,12 +21,19 @@ const addName = (event, newName, newNumber, allNames, addNewName, showAll, setSh
       return
     }
   
+    nameService
+      .create(nameObject)
+      .then(response => {
+        addNewName(allNames.concat(response.data))
+        setNewName('')
+        setNewNumber('')
+        setShowAll('')
+      })
+    
     const updateNames = [...allNames, nameObject]
     addNewName(updateNames);
     setFiltered(updateNames.filter(person => person.name.toLowerCase().includes(showAll.toLowerCase())));
-    setNewName('')
-    setNewNumber('')
-    setShowAll('')
+    
     }
 
 export default addName

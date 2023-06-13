@@ -1,5 +1,6 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
+import axios from 'axios'
 import Name from './components/Name'
 import handleFiltering from './components/handleFiltering'
 import handleNameChange from './components/handleNameChange'
@@ -25,9 +26,20 @@ const App = () => {
       })
 
   }, [])
-  console.log('render',allNames.length,'persons')
+  //console.log('render',allNames.length,'persons')
 
-  console.log(filtered)
+  //console.log(filtered)
+
+  const handleDelete = ({ id, name }) => {
+    console.log(`Delete ${name}?`)
+
+    if (window.confirm(`Delete ${name}?`)) {
+        axios.delete(`http://localhost:3001/persons/${id}`)
+        const updatedNames = allNames.filter(person => person.id !== id);
+        addNewName(updatedNames)
+        setFiltered(updatedNames)
+    }
+}
 
 
   return (
@@ -44,7 +56,7 @@ const App = () => {
 
       <h2>add a new</h2>
 
-      <form onSubmit={(event) => addName(event, newName, newNumber, allNames, addNewName, showAll, setShowAll, setFiltered, setNewName, setNewNumber)}>
+      <form onSubmit={(event) => addName(event, newName, newNumber, allNames, addNewName, showAll, setShowAll, setFiltered, setNewName, setNewNumber, nameService)}>
         <div>
           name: <input 
           value = {newName}
@@ -65,16 +77,18 @@ const App = () => {
       <h2>Numbers</h2>
         <ul>
           {filtered.map(person =>
-            <Name 
-            nuemes={person.name} 
-            numero={person.number} 
-            id = {person.id}
-            />
+            <div style = {{ display:"flex", alignItems: "center" }}>
+              <Name 
+                nuemes={person.name} 
+                numero={person.number} 
+                id = {person.id}
+              />
+              <button type="submit" style={{ marginLeft: "1rem" }} onClick={() => handleDelete({id: person.id, name: person.name})}>delete</button>
+            </div>
+
           )}
         </ul>
-      
     </div>
-    
   )
 }
 

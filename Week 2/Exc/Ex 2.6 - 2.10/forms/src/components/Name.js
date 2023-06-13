@@ -2,7 +2,11 @@ import React from 'react'
 
 const Name = ({ nuemes, numero, id }) => {
     return (
-      <p key={id}>{nuemes} {numero}</p>
+      <div>
+        <p key={id}>
+          {nuemes} {numero}
+        </p>
+      </div>
     )}
   
   export default Name
