@@ -24,6 +24,9 @@ const App = () => {
         addNewName(initialNames)
         setFiltered([...initialNames])
       })
+      .catch(error => {
+        console.log('fail')
+      })
 
   }, [])
   //console.log('render',allNames.length,'persons')
