@@ -2,23 +2,13 @@
   "persons": [
     {
       "name": "Lalo Salamanca",
-      "number": "1800-Better-Call-Saul",
+      "number": "Better-Call-Saul 1800",
       "id": 5
     },
     {
-      "name": "Arto Hellas",
-      "number": "040-123456",
-      "id": 1
-    },
-    {
-      "name": "Ada Lovelace",
-      "number": "39-44-5323523",
-      "id": 2
-    },
-    {
-      "name": "Peter",
-      "number": "44412",
-      "id": 7
+      "name": "Waltuh who are you",
+      "number": ":3333",
+      "id": 8
     }
   ]
 }

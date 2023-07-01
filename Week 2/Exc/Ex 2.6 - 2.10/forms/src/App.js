@@ -6,7 +6,9 @@ import handleFiltering from './components/handleFiltering'
 import handleNameChange from './components/handleNameChange'
 import handleNumberChange from './components/handleNumberChange'
 import addName from './components/addName'
-import nameService from './services/name' 
+import nameService from './services/name'
+import Notify from './components/notification'
+import NotAvailable from './components/noneError'
 
 
 const App = () => {
@@ -15,6 +17,9 @@ const App = () => {
   const [allNames, addNewName] = useState([])
   const [showAll, setShowAll] = useState('')
   const [filtered, setFiltered] = useState([])
+  const [errorMessage, setErrorMessage] = useState(null)
+  const [infoErrorMessage, setInfoErrorMessage] = useState(null)
+
 
   useEffect(() => {
     console.log('effect')
@@ -28,10 +33,10 @@ const App = () => {
         console.log('fail')
       })
 
-  }, [])
-  //console.log('render',allNames.length,'persons')
+    }, [])
 
-  //console.log(filtered)
+      
+
 
   const handleDelete = ({id, name}) => {
     console.log(`Delete ${name}?`)
@@ -48,51 +53,70 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-
+      <Notify message={errorMessage}/>
+      <NotAvailable message={infoErrorMessage}/>
       <form>
-      filter shown with <input
-      value = {showAll}
-      onChange={(event) => handleFiltering(event, setShowAll, showAll, setFiltered, filtered)}
-      />
-        
+        filter shown with{" "}
+        <input
+          value={showAll}
+          onChange={(event) =>
+            handleFiltering(
+              event,
+              setShowAll,
+              showAll,
+              setFiltered,
+              filtered
+            )
+          }
+        />
       </form>
-
+  
       <h2>add a new</h2>
-
-      <form onSubmit={(event) => addName(event, newName, newNumber, allNames, addNewName, showAll, setShowAll, setFiltered, setNewName, setNewNumber, nameService)}>
+  
+      <form
+        onSubmit={(event) =>
+          addName(event,newName,newNumber,allNames,addNewName,showAll,setShowAll,setFiltered,setNewName,
+            setNewNumber,
+            setErrorMessage,
+            setInfoErrorMessage
+          )
+        }
+      >
         <div>
-          name: <input 
-          value = {newName}
-          onChange={(event) => handleNameChange(event, setNewName)}    
-            />
-        </div>
-        <div>
-          number: <input
-          value = {newNumber}
-          onChange={(event) => handleNumberChange(event, setNewNumber)}
+          name:{" "}
+          <input
+            value={newName}
+            onChange={(event) => handleNameChange(event, setNewName)}
           />
         </div>
-
+        <div>
+          number:{" "}
+          <input
+            value={newNumber}
+            onChange={(event) => handleNumberChange(event, setNewNumber)}
+          />
+        </div>
+  
         <div>
           <button type="submit">add</button>
         </div>
       </form>
       <h2>Numbers</h2>
-        <ul>
-          {filtered.map(person =>
-            <div style = {{ display:"flex", alignItems: "center" }}>
-              <Name 
-                nuemes={person.name} 
-                numero={person.number} 
-                id = {person.id}
-              />
-              <button type="submit" style={{ marginLeft: "1rem" }} onClick={() => handleDelete({id: person.id, name: person.name})}>delete</button>
-            </div>
-
-          )}
-        </ul>
+      <ul>
+        {filtered.map((person) => (
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <Name nuemes={person.name} numero={person.number} id={person.id} />
+            <button
+              type="submit"
+              style={{ marginLeft: "1rem" }}
+              onClick={() => handleDelete({ id: person.id, name: person.name })}
+            >
+              delete
+            </button>
+          </div>
+        ))}
+      </ul>
     </div>
-  )
-}
+  )}
 
 export default App
