@@ -1,9 +1,14 @@
-import React from "react"
+import React from 'react';
 
-const handleFiltering = (event, setShowAll, showAll, setFiltered, filtered) => {
-    event.preventDefault()
-    setShowAll(event.target.value)
-    setFiltered(filtered.filter(person => person.name.toLowerCase().includes(showAll.toLowerCase())))
-  }
+const handleFiltering = (event, setShowAll, showAll, setFiltered, allNames) => {
+  event.preventDefault();
+  const inputValue = event.target.value;
+  setShowAll(inputValue);
+  setFiltered(
+    allNames.filter((person) =>
+      person.name.toLowerCase().includes(inputValue.toLowerCase())
+    )
+  );
+};
 
-export default handleFiltering
+export default handleFiltering;
