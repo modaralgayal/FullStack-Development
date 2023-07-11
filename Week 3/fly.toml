@@ -1,0 +1,25 @@
+# fly.toml app configuration file generated for young-silence-6119 on 2023-07-11T17:34:17+03:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = "young-silence-6119"
+primary_region = "arn"
+
+[env]
+  PORT = "8080" # add this
+
+[experimental]
+  auto_rollback = true
+
+[[services]]
+  http_checks = []
+  internal_port = 8080 
+  processes = ["app"]
+
+[http_service]
+  internal_port = 3001
+
+[build]
+  builder = "paketobuildpacks/builder:base"
+  buildpacks = ["gcr.io/paketo-buildpacks/nodejs"]
